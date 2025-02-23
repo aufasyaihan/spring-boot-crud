@@ -1,7 +1,7 @@
 package com.example.SpringBoot.controller;
 
-import com.example.SpringBoot.model.User;
-import com.example.SpringBoot.service.UserService;
+import com.example.SpringBoot.model.Krs;
+import com.example.SpringBoot.service.KrsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,44 +9,44 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/krs")
 public class UserController {
-    private final UserService userService;
+    private final KrsService krsService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(KrsService krsService) {
+        this.krsService = krsService;
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public List<Krs> getAllKrs() {
+        return krsService.getAllKrs();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> user = userService.getUserById(id);
-        return user.map(ResponseEntity::ok)
+    public ResponseEntity<Krs> getKrsById(@PathVariable Long id) {
+        Optional<Krs> krs = krsService.getKrsById(id);
+        return krs.map(ResponseEntity::ok)
                    .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public Krs createKrs(@RequestBody Krs krs) {
+        return krsService.createKrs(krs);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<Krs> updateKrs(@PathVariable Long id, @RequestBody Krs krs) {
         try {
-            User updatedUser = userService.updateUser(id, user);
-            return ResponseEntity.ok(updatedUser);
+            Krs updatedKrs = krsService.updateKrs(id, krs);
+            return ResponseEntity.ok(updatedKrs);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public ResponseEntity<Void> deleteKrs(@PathVariable Long id) {
+        krsService.deleteKrs(id);
         return ResponseEntity.noContent().build();
     }
 }
