@@ -3,6 +3,9 @@ package com.example.SpringBoot.service;
 import com.example.SpringBoot.model.Krs;
 import com.example.SpringBoot.repository.KrsRepository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +20,10 @@ public class KrsService {
         this.krsRepository = krsRepository;
         }
 
-        public List<Krs> getAllKrs() {
-        return krsRepository.findAll(Sort.by(Sort.Direction.ASC, "id_krs"));
+        public List<Krs> getAllKrs(int page, int size) {
+            Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "idKrs"));
+            Page<Krs> krsPage= krsRepository.findAll(pageable);
+            return krsPage.getContent();
         }
 
         public Optional<Krs> getKrsById(Long id) {

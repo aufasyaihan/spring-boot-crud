@@ -8,7 +8,9 @@ public class Krs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long krs_id;
+    @Column(name = "id_krs")
+    private Long idKrs;
+
 
     @Column(nullable = false)
     private String nim;
@@ -36,12 +38,12 @@ public class Krs {
         this.tahunakademik = tahunakademik;
     }
 
-    public Long getKrs_id() {
-        return krs_id;
+    public Long getIdKrs() {
+        return idKrs;
     }
 
-    public void setKrs_id(Long krs_id) {
-        this.krs_id = krs_id;
+    public void setIdKrs(Long idKrs) {
+        this.idKrs = idKrs;
     }
 
     public String getNim() {
