@@ -12,10 +12,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/krs")
-public class UserController {
+public class KrsController {
     private final KrsService krsService;
 
-    public UserController(KrsService krsService) {
+    public KrsController(KrsService krsService) {
         this.krsService = krsService;
     }
 
