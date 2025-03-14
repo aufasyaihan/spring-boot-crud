@@ -3,6 +3,7 @@ package com.example.SpringBoot.controller;
 import com.example.SpringBoot.dto.MetaDTO;
 import com.example.SpringBoot.dto.ResponseDTO;
 import com.example.SpringBoot.model.Krs;
+import com.example.SpringBoot.repository.KrsRepository.KrsProjection;
 import com.example.SpringBoot.service.KrsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +21,10 @@ public class KrsController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseDTO<Krs>> getAllKrs() {
-        List<Krs> krsList = krsService.getAllKrs(1, 350000);
+    public ResponseEntity<ResponseDTO<KrsProjection>> getAllKrs() {
+        List<KrsProjection> krsList = krsService.getAllKrs(1000);
         MetaDTO meta = new MetaDTO(200, "Success");
-        ResponseDTO<Krs> response = new ResponseDTO<>(meta, krsList);
+        ResponseDTO<KrsProjection> response = new ResponseDTO<>(meta, krsList);
 
         return ResponseEntity.ok(response);
     }

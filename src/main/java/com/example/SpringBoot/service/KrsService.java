@@ -2,11 +2,12 @@ package com.example.SpringBoot.service;
 
 import com.example.SpringBoot.model.Krs;
 import com.example.SpringBoot.repository.KrsRepository;
+import com.example.SpringBoot.repository.KrsRepository.KrsProjection;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+// import org.springframework.data.domain.Page;
+// import org.springframework.data.domain.PageRequest;
+// import org.springframework.data.domain.Pageable;
+// import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,15 +19,19 @@ public class KrsService {
 
     public KrsService(KrsRepository krsRepository) {
         this.krsRepository = krsRepository;
-        }
+    }
 
-        public List<Krs> getAllKrs(int page, int size) {
-            Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "idKrs"));
-            Page<Krs> krsPage= krsRepository.findAll(pageable);
-            return krsPage.getContent();
-        }
+    // ✅ Ambil data KRS tanpa COUNT(*) menggunakan custom query
+    public List<KrsProjection> getLimitedKrs(int limit) {
+        return krsRepository.findLimited(limit);
+    }
 
-        public Optional<Krs> getKrsById(Long id) {
+    public List<KrsProjection> getAllKrs(int limit) {
+        // Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "idKrs"));
+        return krsRepository.findLimited(limit);
+    }
+
+    public Optional<Krs> getKrsById(Long id) {
         return krsRepository.findById(id);
     }
 
@@ -44,7 +49,7 @@ public class KrsService {
             return krsRepository.save(krs);
         }).orElseThrow(() -> new RuntimeException("KRS not found"));
     }
-    
+
     public void deleteKrs(Long id) {
         krsRepository.deleteById(id);
     }
